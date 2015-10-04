@@ -1,6 +1,99 @@
-Bounded Value Least Squares
+Bounded Value Least Squares                                                                       
+                                                                                                    
+This is a python wrapper of the Fortran90 bvls module originally                                  
+written by Charles Lawson and Richard Hanson and then modified by John                            
+Burkardt.                                                                                         
+                                                                                                    
+(Documentation modified from the bvls subroutine in bvls.f90)
 
-This is a wrapper for the fortran code by Lawson and Hanson
+DISCUSSION
+----------
+  Given an M by N matrix, A, and an M-vector, B,  compute an                                     
+  N-vector, X, that solves the least-squares problem                                             
+
+    A.dot(X) = B                                                                                    
+
+  subject to the lower and upper bounds:                                                         
+
+    BND[1] <= X <= BND[2]                                                             
+                                                                                                  
+  In cases where no bound is intended, simply set the corresponding entry                        
+  of BND to a very negative or very positive value.                                              
+                                                                                                  
+  This algorithm is a generalization of NNLS, which solves                                       
+  the least-squares problem,                                                                     
+
+    A.dot(X) = B                                                                                    
+
+  subject to the constraints                                                                     
+
+    0 <= X.  
+
+PARAMETERS                                                                                        
+----------                                                                                        
+  A: (M,N) system matrix mapping the model vector to observation vector                          
+  B: (M,) observation vector                                                                     
+  BND : (2,N) lower and upper bounds for X                             
+
+                                                                                                    
+RETURNS                                                                                           
+-------                                                                                           
+  X: (N,) the solution vector
+
+  RNORM: the Euclidean norm of the residual vector, B - A.dot(X)
+
+  NSTEP: the number of components of the solution vector, X, that
+    are not at their constraint values
+ 
+  W: (N,) the dual solution vector.  Using Set definitions below
+    * W(J) = 0 for all j in Set P,                                                                 
+    * W(J)  <=  0 for all j in Set Z, such that X(J) is at its                                     
+      lower bound, and                                                                             
+    * W(J)  >=  0 for all j in Set Z, such that X(J) is at its                                     
+      upper bound.                                                                                 
+    If BND[1,J] = BND[2,J], so the variable X(J) is fixed,                                         
+    then W(J) will have an arbitrary value.
+
+  INDEX: (N,) defines the sets P, Z, and F:                           
+    * INDEX(1)   through INDEX(NSETP) =  Set P.                                                    
+    * INDEX(IZ1) through INDEX(IZ2)      = Set Z.                                                  
+    * INDEX(IZ2+1) through INDEX(N)     = Set F.                                                   
+    * IZ1 = NSETP + 1 = NPP1                                                                       
+    Any of these sets may be empty.  Set F is those components                                     
+    that are constrained to a unique value by the given                                            
+    constraints.   Sets P and Z are those that are allowed a non-zero                              
+    range of values.  Of these, set Z are those whose final                                        
+    value is a constraint value, while set P are those whose                                       
+    final value is not a constraint.  The value of IZ2 is not returned.                            
+    It is computable as the number of bounds constraining a component                              
+    of X uniquely.  
+
+  IERR: status flag.                                                
+    * 0, Solution completed.                                                                       
+    * 1, M  <=  0 or N  <=  0                                                                      
+    * 2, B(:), X(:), BND(:,:), W(:), or INDEX(:) size or shape violation.                          
+    * 3, Input bounds are inconsistent.                                                            
+    * 4, Exceed maximum number of iterations.  
+
+
+INSTALLATION 
+------------ 
+  Within the BVLS directory, type the following command to compile the
+  fortran code and generate the extension file
+
+  $python setup.py install
+  
+USAGE                                                                                             
+-----                                                                                             
+  >>>import bvls                                                                                  
+  >>>G = np.random.random((10,2))                                                                 
+  >>>m = np.array([1.0,2.0])                                                                      
+  >>>d = G.dot(m)                                                                                 
+  >>>lower_bounds = np.array([0.0,0.0])                                                           
+  >>>upper_bounds = np.array([1.5,1.5])                                                           
+  >>>output = bvls.bvls(G,d,[lower_bounds,upper_bounds])                                            
+  >>>m_est = output[0]                                                                            
+
 
 
 

@@ -6,9 +6,9 @@ python module bvls ! in
         subroutine bvls(m,n,a,b,bnd,x,rnorm,nsetp,w,index_bn,ierr) ! in :bvls:bvls.f90
             integer(kind=4), intent(hide),depend(a) :: m=shape(a,0)
             integer(kind=4), intent(hide),depend(a) :: n=shape(a,1)
-            real(kind=8) dimension(m,n) :: a
-            real(kind=8) dimension(m),depend(m) :: b
-            real(kind=8) dimension(2,n),depend(n) :: bnd
+            real(kind=8) intent(in),dimension(m,n) :: a
+            real(kind=8) intent(in,copy),dimension(m),depend(m) :: b
+            real(kind=8) intent(in),dimension(2,n),depend(n) :: bnd
             real(kind=8) intent(out),dimension(n),depend(n) :: x
             real(kind=8) intent(out):: rnorm
             integer(kind=4) intent(out),depend(n):: nsetp
