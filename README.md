@@ -25,11 +25,12 @@ all the subroutines in `bvls.f90`.
 The following python code sets up and solves a bounded value least 
 squares problem
 ```python
-import bvls                                                                                  
-G = np.random.random((10,2))                                                                 
-m = np.array([1.0,2.0])                                                                      
-d = G.dot(m)                                                                                 
-lower_bounds = np.array([0.0,0.0])                                                           
+import bvls
+import numpy as np
+G = np.random.random((10,2))
+m = np.array([1.0,2.0])
+d = G.dot(m)    
+lower_bounds = np.array([0.0,0.0])
 upper_bounds = np.array([1.5,1.5])
 bounds = [lower_bounds,upper_bounds]
 soln = bvls.bvls(G,d,bounds)
