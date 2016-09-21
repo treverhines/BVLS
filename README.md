@@ -1,13 +1,12 @@
 # BVLS
 
 ## Description
-This is a python wrapper for the bounded value least squares (BVLS) 
-algorithm.  The BVLS algorithm used in this package was originally 
-written in Fortran90 by Charles Lawson and Richard Hanson and then 
-modified by John Burkardt.  The algorithm finds the vector `m` such 
-that `G.dot(m)` is the best prediction to the observation vector `d` 
-in a least squares sense with the constraint that `bounds[0] >= m` and 
-`bounds[1] <= m`.
+This is a python wrapper for the bounded variable least squares (BVLS) 
+algorithm.  The fortran source code for the BVLS algorithm was taken from
+[here](.https://people.sc.fsu.edu/~jburkardt/f_src/bvls/bvls.html). 
+The algorithm finds the vector `m` such that `G.dot(m)` is the best 
+prediction to the observation vector `d` in a least squares sense 
+with the constraint that `bounds[0] >= m` and `bounds[1] <= m`.
 
 ## Installation
 Compiling the Fortran code and creating the python wrapper is done 
