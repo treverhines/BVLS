@@ -2,8 +2,8 @@
 
 ## Description
 This is a python wrapper for the bounded variable least squares (BVLS) 
-algorithm.  The fortran source code for the BVLS algorithm was taken from
-[here](https://people.sc.fsu.edu/~jburkardt/f_src/bvls/bvls.html). 
+solver (the fortran source code was taken from
+[here](https://people.sc.fsu.edu/~jburkardt/f_src/bvls/bvls.html)). 
 The algorithm finds the vector `m` such that `G.dot(m)` is the best 
 prediction to the observation vector `d` in a least squares sense 
 with the constraint that `bounds[0] >= m` and `bounds[1] <= m`.
