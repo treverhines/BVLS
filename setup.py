@@ -1,13 +1,16 @@
-def configuration(parent_package='',top_path=None):
-    from numpy.distutils.misc_util import Configuration
-    config = Configuration(None, parent_package, top_path)
-    config.add_extension('bvls',sources=['bvls/bvls.pyf','bvls/bvls.f90']) 
-    return config
-
-if __name__ == '__main__':
-    from numpy.distutils.core import setup
-    setup(name = 'BVLS',
-          configuration=configuration)
-
+from numpy.distutils.core import setup, Extension
+ext = []
+ext.append(Extension('_bvls',
+                     sources = ['bvls/_bvls.f90',
+                                'bvls/_bvls.pyf']))
+setup(
+   name='BVLS',
+   packages=['bvls'],
+   version='0.1.0',
+   description='Python wrapper for the bounded value least squares algorithm',
+   author='Trever Hines',
+   author_email='hinest@umich.edu',
+   url='https://github.com/treverhines/BVLS',
+   ext_modules=ext)
 
 

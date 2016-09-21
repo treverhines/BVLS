@@ -1,7 +1,6 @@
 # BVLS
 
 ## Description
-
 This is a python wrapper for the bounded value least squares (BVLS) 
 algorithm.  The BVLS algorithm used in this package was originally 
 written in Fortran90 by Charles Lawson and Richard Hanson and then 
@@ -35,6 +34,4 @@ upper_bounds = np.array([1.5,1.5])
 bounds = [lower_bounds,upper_bounds]
 soln = bvls.bvls(G,d,bounds)
 ```
-`soln` is a tuple with six objects. The first entry is the solution 
-vector, and the second is the residual vector.  See the documentation 
-in `bvls.f90` for a description of the remaining objects.
+See the documentation in `bvls.f90` for additional details
